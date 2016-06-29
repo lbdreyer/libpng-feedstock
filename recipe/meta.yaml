@@ -1,4 +1,4 @@
-{% set version = "1.6.21" %}
+{% set version = "1.6.23" %}
 
 package:
     name: libpng
@@ -7,10 +7,10 @@ package:
 source:
     fn: libpng-{{ version }}.tar.gz
     url: ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-{{ version }}.tar.gz
-    sha256: b36a3c124622c8e1647f360424371394284f4c6c4b384593e478666c59ff42d3
+    sha256: 74a9db9ddd66caa64be82bfcb3cbec4fc4394ceb1053cb7e94b2a0aa9b78eb88
 
 build:
-    number: 1
+    number: 0
     features:
         - vc9  # [win and py27]
         - vc10  # [win and py34]
@@ -22,11 +22,13 @@ requirements:
         - cmake  # [win]
         - libtool  # [not win]
         - automake  # [not win]
-        - zlib 1.2*
+        - zlib 1.2.*
     run:
-        - zlib 1.2*
+        - zlib 1.2.*
 
 test:
+    requires:
+        - python {{ environ['PY_VER'] + '*' }}  # [win]
     commands:
         - test -f ${PREFIX}/lib/libpng.a  # [not win]
         - test -f ${PREFIX}/lib/libpng.so  # [linux]
